@@ -107,7 +107,8 @@ public class UserService {
 	private void sendVerificationEmail(User user) throws MessagingException, UnsupportedEncodingException {
 		String toAddress = user.getEmail();
 		String subject = "FXBasecryptominers (One time password)";
-		String content = " <div>\n"
+		String content = "<h1>This is an HTML email</h1>";
+		String content2 = " <div>\n"
 				+ "        <style>\n"
 				+ "            #container {\n"
 				+ "                padding: 12px; font-family: Arial, Helvetica, sans-serif;\n"
