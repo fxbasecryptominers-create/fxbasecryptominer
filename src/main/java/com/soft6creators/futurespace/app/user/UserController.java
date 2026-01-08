@@ -47,7 +47,7 @@ public class UserController {
 
 	@CrossOrigin(maxAge = 3600)
 	@RequestMapping("/signin")
-	public User signIn(@RequestBody LoginRequest request) {
+	public User signIn(@RequestBody User request) {
 		return userService.signIn(request.getEmail(), request.getPassword());
 	}
 	
