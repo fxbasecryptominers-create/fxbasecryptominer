@@ -283,32 +283,33 @@ function signUp() {
 }
 
 function signIn(email, password, target) {
-	let signInXhr = new XMLHttpRequest();
-	signInXhr.open("GET", `/signin/email/${email}/password/${password}`);
-	signInXhr.send();
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/signin");
+    xhr.setRequestHeader("Content-Type", "application/json");
 
-	signInXhr.onreadystatechange = function() {
-		if (this.status == 200 && this.readyState == 4) {
-			let response = JSON.parse(this.response);
-			if (response.email != null) {
-				if (response.role == "USER") {
-					location.replace(`./dashboard.html?email=${response.email}`);
-				}
-				else {
-					location.replace(`./admin.html?email=${response.email}`);
-				}
-				
-			}
-			else {
-				target.classList.add("blue-background-light");
-				target.innerHTML =
-					"Sign In";
-					document.getElementById("incorrect-password").style.display = "block";
-			}
-		}
-	}
+    xhr.send(JSON.stringify({
+        email: email,
+        password: password
+    }));
 
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                let response = JSON.parse(xhr.responseText);
+                if (response.email) {
+                    location.replace(
+                        response.role === "USER"
+                            ? `./dashboard.html?email=${response.email}`
+                            : `./admin.html?email=${response.email}`
+                    );
+                } else {
+                    document.getElementById("incorrect-password").style.display = "block";
+                }
+            }
+        }
+    };
 }
+
 
 function changeCard(first, second) {
 	second.style.display = "block";
